@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.Loki;
 
 namespace dotnetAPM
 {
@@ -17,6 +18,7 @@ namespace dotnetAPM
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.LokiHttp(new NoAuthCredentials("http://192.168.1.20:3100"))
                 .CreateLogger();
 
             try
